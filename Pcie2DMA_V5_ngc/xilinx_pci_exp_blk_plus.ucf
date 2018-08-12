@@ -1,0 +1,496 @@
+
+###############################################################################
+##-----------------------------------------------------------------------------
+##
+## (c) Copyright 2009-2010 Xilinx, Inc. All rights reserved.
+##
+## This file contains confidential and proprietary information
+## of Xilinx, Inc. and is protected under U.S. and
+## international copyright and other intellectual property
+## laws.
+##
+## DISCLAIMER
+## This disclaimer is not a license and does not grant any
+## rights to the materials distributed herewith. Except as
+## otherwise provided in a valid license issued to you by
+## Xilinx, and to the maximum extent permitted by applicable
+## law: (1) THESE MATERIALS ARE MADE AVAILABLE "AS IS" AND
+## WITH ALL FAULTS, AND XILINX HEREBY DISCLAIMS ALL WARRANTIES
+## AND CONDITIONS, EXPRESS, IMPLIED, OR STATUTORY, INCLUDING
+## BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, NON-
+## INFRINGEMENT, OR FITNESS FOR ANY PARTICULAR PURPOSE; and
+## (2) Xilinx shall not be liable (whether in contract or tort,
+## including negligence, or under any other theory of
+## liability) for any loss or damage of any kind or nature
+## related to, arising under or in connection with these
+## materials, including for any direct, or any indirect,
+## special, incidental, or consequential loss or damage
+## (including loss of data, profits, goodwill, or any type of
+## loss or damage suffered as a result of any action brought
+## by a third party) even if such damage or loss was
+## reasonably foreseeable or Xilinx had been advised of the
+## possibility of the same.
+##
+## CRITICAL APPLICATIONS
+## Xilinx products are not designed or intended to be fail-
+## safe, or for use in any application requiring fail-safe
+## performance, such as life-support or safety devices or
+## systems, Class III medical devices, nuclear facilities,
+## applications related to the deployment of airbags, or any
+## other applications that could lead to death, personal
+## injury, or severe property or environmental damage
+## (individually and collectively, "Critical
+## Applications"). Customer assumes the sole risk and
+## liability of any use of Xilinx products in Critical
+## Applications, subject only to applicable laws and
+## regulations governing limitations on product liability.
+##
+## THIS COPYRIGHT NOTICE AND DISCLAIMER MUST BE RETAINED AS
+## PART OF THIS FILE AT ALL TIMES.
+##
+##-----------------------------------------------------------------------------
+## Project    : V5-Block Plus for PCI Express
+## File       : xilinx_pci_exp_blk_plus_8_lane_ep_xc5vlx50t-ff1136-1.ucf
+#
+# Use this file only with the device listed below.  Any other
+# combination is invalid.  Do not modify this file except in
+# regions designated for "User" constraints.
+#
+###############################################################################
+# Define Device, Package And Speed Grade
+###############################################################################
+
+CONFIG PART = xc5vlx155t-ff1136-1;
+
+###############################################################################
+# User Time Names / User Time Groups / Time Specs
+###############################################################################
+
+###############################################################################
+# User Physical Constraints
+###############################################################################
+
+
+###############################################################################
+# Pinout and Related I/O Constraints
+###############################################################################
+
+#
+# SYS reset (input) signal.  The sys_reset_n signal should be
+# obtained from the PCI Express interface if possible.  For
+# slot based form factors, a system reset signal is usually
+# present on the connector.  For cable based form factors, a
+# system reset signal may not be available.  In this case, the
+# system reset signal must be generated locally by some form of
+# supervisory circuit.  You may change the IOSTANDARD and LOC
+# to suit your requirements and VCCO voltage banking rules.
+#
+
+NET "sys_reset_n"      LOC = "P24"  | IOSTANDARD = LVCMOS25 | PULLUP | NODELAY ;
+
+#
+# SYS clock 100 MHz (input) signal. The sys_clk_p and sys_clk_n
+# signals are the PCI Express reference clock. Virtex-5 GTP
+# Transceiver architecture requires the use of a dedicated clock
+# resources (FPGA input pins) associated with each GTP Transceiver Tile.
+# To use these pins an IBUFDS primitive (refclk_ibuf) is
+# instantiated in user's design.
+# Please refer to the Virtex-5 GTP Transceiver User Guide
+# (UG196) for guidelines regarding clock resource selection.
+#
+
+NET  "sys_clk_p"       LOC = "Y4"  ;
+NET  "sys_clk_n"       LOC = "Y3"  ;
+INST "xilinx_pcie_inst/refclk_ibuf"     DIFF_TERM = "TRUE" ;
+
+#
+# Transceiver instance placement.  This constraint selects the
+# transceivers to be used, which also dictates the pinout for the
+# transmit and receive differential pairs.  Please refer to the
+# Virtex-5 GTP Transceiver User Guide (UG196) for more
+# information.
+#
+
+# PCIe Lanes 0, 1
+INST "xilinx_pcie_inst/ep/pcie_ep0/pcie_blk/SIO/.pcie_gt_wrapper_i/GTD[0].GT_i" LOC = GTP_DUAL_X0Y3;
+
+# PCIe Lanes 2, 3
+INST "xilinx_pcie_inst/ep/pcie_ep0/pcie_blk/SIO/.pcie_gt_wrapper_i/GTD[2].GT_i" LOC = GTP_DUAL_X0Y2;
+
+# PCIe Lanes 4, 5
+INST "xilinx_pcie_inst/ep/pcie_ep0/pcie_blk/SIO/.pcie_gt_wrapper_i/GTD[4].GT_i" LOC = GTP_DUAL_X0Y1;
+
+# PCIe Lanes 6, 7
+INST "xilinx_pcie_inst/ep/pcie_ep0/pcie_blk/SIO/.pcie_gt_wrapper_i/GTD[6].GT_i" LOC = GTP_DUAL_X0Y0;
+
+#
+# Timing requirements and related constraints.
+#
+
+NET "xilinx_pcie_inst/sys_clk_c"                                      PERIOD = 10ns;
+
+NET "xilinx_pcie_inst/ep/pcie_ep0/pcie_blk/SIO/.pcie_gt_wrapper_i/gt_refclk_out[0]" TNM_NET = "MGTCLK" ;
+
+
+TIMESPEC "TS_MGTCLK"  = PERIOD "MGTCLK" 100.00 MHz HIGH 50 % ;
+
+NET "xilinx_pcie_inst/trn_clk_c" TNM_NET = "trn_clk_c";
+TIMESPEC "TS_trn_clk_c" = PERIOD "trn_clk_c" 4.0 ns HIGH 50%;
+
+NET  "LED_A"     LOC = H28;//J24;
+NET  "LED_B"     LOC = G25;
+NET  "LED_C"     LOC = L25;
+#NET  "FIBER_A_TXEN"	LOC = F25;	
+#NET  "FIBER_A_RXEN"	LOC = F26;	                          
+#NET  "FIBER_A_SQS"	LOC = H28;	
+#NET  "FIBER_A_SWS"	LOC = G28;	
+
+
+NET  CLK125_P					LOC  =  AG18 ; //-- USER CLK
+NET  CLK125_N					LOC  =  AF19 ;
+
+NET  DDR2_CLK125_P         LOC  =  K17 ;  //-- DDR2 CLK
+NET  DDR2_CLK125_N         LOC  =  L18 ;
+NET  "DDR2_CLK125_P"       IOSTANDARD = LVDS_25;
+NET  "DDR2_CLK125_N"       IOSTANDARD = LVDS_25;
+
+NET  USER_CLK125_P         LOC  =  L19;   //-- PLL CLK
+NET  USER_CLK125_N         LOC  =  K19; 
+
+NET "CLK125_c" TNM_NET = "CLK125_c";
+TIMESPEC "TS_CLK125_c" = PERIOD "CLK125_c" 8.0 ns HIGH 50%;
+
+NET "CLK_62MHz" TNM_NET = "CLK_62MHz";
+TIMESPEC "TS_CLK_62MHz" = PERIOD "CLK_62MHz" 16.0 ns HIGH 50%;
+
+#NET "Pcie_Gtp_Interface_inst/CLK_100MHz" TNM_NET = "CLK_100MHz";
+#TIMESPEC "TS_CLK_100MHz" = PERIOD "CLK_100MHz" 10.0 ns HIGH 50%;
+
+
+#####################################################
+############################################################################
+##  File name :       fpga_ddr2.ucf
+## 
+##  Description :     Constraints file
+##                    targetted to xc5vlx155t-ff1136
+##
+############################################################################ 
+############################################################################
+# Clock constraints                                                        #
+############################################################################
+INST "ddr2_sodimm/u_ddr2_infrastructure/u_pll_adv" LOC = PLL_ADV_X0Y2;
+
+NET "ddr2_sodimm/u_ddr2_infrastructure/sys_clk_ibufg" TNM_NET =  "SYS_CLK";
+TIMESPEC "TS_SYS_CLK" = PERIOD "SYS_CLK" 8.0 ns HIGH 50 %;
+NET "ddr2_sodimm/clk0" TNM_NET =  "clk0";
+TIMESPEC "TS_clk0" = PERIOD "clk0" 6.67 ns HIGH 50 %;
+
+############################################################################
+########################################################################
+# Controller 0#
+# Memory Device DDR2 SDRAM->DIMMS->MT9HTF6472Y-667#
+########################################################################
+######################################################################################################
+# I/O STANDARDS
+######################################################################################################
+NET  "ddr2_dq[*]"                                    IOSTANDARD = SSTL18_II;
+NET  "ddr2_a[*]"                                     IOSTANDARD = SSTL18_II;
+NET  "ddr2_ba[*]"                                    IOSTANDARD = SSTL18_II;
+NET  "ddr2_ras_n"                                    IOSTANDARD = SSTL18_II;
+NET  "ddr2_cas_n"                                    IOSTANDARD = SSTL18_II;
+NET  "ddr2_we_n"                                     IOSTANDARD = SSTL18_II;
+NET  "ddr2_cs_n[*]"                                  IOSTANDARD = SSTL18_II;
+NET  "ddr2_odt[*]"                                   IOSTANDARD = SSTL18_II;
+NET  "ddr2_cke[*]"                                   IOSTANDARD = SSTL18_II;
+NET  "ddr2_dm[*]"                                    IOSTANDARD = SSTL18_II;
+NET  "ddr2_dqs[*]"                                   IOSTANDARD = DIFF_SSTL18_II_DCI;
+NET  "ddr2_dqs_n[*]"                                 IOSTANDARD = DIFF_SSTL18_II_DCI;
+NET  "ddr2_ck[*]"                                    IOSTANDARD = DIFF_SSTL18_II;
+NET  "ddr2_ck_n[*]"                                  IOSTANDARD = DIFF_SSTL18_II;
+###############################################################################
+# Define FPGA clock to ODDRs using an explicit FROM-TO constraint (that
+# overrides the PERIOD constraint of FPGA clock). Do this to get around the 
+# 8.2i bug where tool analyzes inputs to ODDR in SAME_EDGE mode using both 
+# the rising and falling edge of the clock (should only be rising). 
+# Ideally, a better solution would be to use the FALLING and RISING keywords 
+# to specifically tag as a TIG (false path) the path from rising edge of 
+# FPGA clock to falling edge of ODDR (and preserve the rising FPGA clock -> 
+# rising ODDR clock path and let the PERIOD constraint on FPGA clock handle it)
+# Doesn't seem to work, maybe the tool isn't doing the right thing (e.g. see
+# AR21096), or maybe I'm an idiot. Or maybe both. Whatever, seems to work.
+###############################################################################
+# Group all primitives that are connected to BUFG clock output (should grab 
+# only synchronous elements in most designs)
+NET  "ddr2_sodimm/clk90" TNM = "TNM_SYS_CLK_BUFG";
+INST "ddr2_sodimm/u_ddr2_top_0/u_mem_if_top/u_phy_top/u_phy_io/gen_dqs*" TNM = "TNM_ODDR";
+# Now specify that total path (includes clk-to-out, route delay, setup time, 
+# clock uncertainty, clock skew, etc) must meet the same PERIOD timing as
+# that specified for the BUFG clock. This is basically repeating what the
+# original PERIOD constraint does, except that it overrides it, and forces 
+# ALL paths from flops clocked by CLK_SYS_BUFG to the ODDR flops to be less
+# than the period constraint, whether or not they are rising->rising, or 
+# rising->falling edge paths (these are the same physical paths, the delay 
+# on them is the same, just that the tool tries to meet half cycle timing on 
+# the rising->fallling edge paths if we just use a PERIOD constraint here)
+# With the FROM-TO override, the tool will no longer try to meet half cycle 
+# time for the rising->falling case.  
+TIMESPEC "TS_SYS_CLK_ODDR" = FROM "TNM_SYS_CLK_BUFG" TO "TNM_ODDR" "TS_SYS_CLK"; 
+###############################################################################
+# Location and timing constraints for squelch circuit. Note these will change
+# if the MIG constraints change
+###############################################################################
+NET "ddr2_dqs[0]"     TNM_NET = "TNM_DQS_0";
+TIMESPEC "TS_DQS_0" = PERIOD "TNM_DQS_0" 6.67 ns HIGH 50%;
+NET "ddr2_dqs[1]"     TNM_NET = "TNM_DQS_1";
+TIMESPEC "TS_DQS_1" = PERIOD "TNM_DQS_1" 6.67 ns HIGH 50%;
+NET "ddr2_dqs[2]"     TNM_NET = "TNM_DQS_2";
+TIMESPEC "TS_DQS_2" = PERIOD "TNM_DQS_2" 6.67 ns HIGH 50%;
+NET "ddr2_dqs[3]"     TNM_NET = "TNM_DQS_3";
+TIMESPEC "TS_DQS_3" = PERIOD "TNM_DQS_3" 6.67 ns HIGH 50%;
+NET "ddr2_dqs[4]"     TNM_NET = "TNM_DQS_4";
+TIMESPEC "TS_DQS_4" = PERIOD "TNM_DQS_4" 6.67 ns HIGH 50%;
+NET "ddr2_dqs[5]"     TNM_NET = "TNM_DQS_5";
+TIMESPEC "TS_DQS_5" = PERIOD "TNM_DQS_5" 6.67 ns HIGH 50%;
+NET "ddr2_dqs[6]"     TNM_NET = "TNM_DQS_6";
+TIMESPEC "TS_DQS_6" = PERIOD "TNM_DQS_6" 6.67 ns HIGH 50%;
+NET "ddr2_dqs[7]"     TNM_NET = "TNM_DQS_7";
+TIMESPEC "TS_DQS_7" = PERIOD "TNM_DQS_7" 6.67 ns HIGH 50%;
+######################################################################################################
+# Location Constraints
+######################################################################################################
+NET  "ddr2_dq[0]"                                     LOC = "C33";  //-- "W24" ; 
+NET  "ddr2_dq[1]"                                     LOC = "C34";  //-- "V24" ; 
+NET  "ddr2_dq[2]"                                     LOC = "A33";  //-- "Y26" ; 
+NET  "ddr2_dq[3]"                                     LOC = "D32";  //-- "W26" ; 
+NET  "ddr2_dq[4]"                                     LOC = "D34";  //-- "V25" ; 
+NET  "ddr2_dq[5]"                                     LOC = "B32";  //-- "W25" ; 
+NET  "ddr2_dq[6]"                                     LOC = "G32";  //-- "Y27" ; 
+NET  "ddr2_dq[7]"                                     LOC = "B33";  //-- "W27" ; 
+NET  "ddr2_dq[8]"                                     LOC = "F33";  //-- "V28" ; 
+NET  "ddr2_dq[9]"                                     LOC = "E33";  //-- "V27" ; 
+NET  "ddr2_dq[10]"                                    LOC = "L33";  //-- "W31" ; 
+NET  "ddr2_dq[11]"                                    LOC = "F34";  //-- "Y31" ; 
+NET  "ddr2_dq[12]"                                    LOC = "E34";  //-- "W29" ; 
+NET  "ddr2_dq[13]"                                    LOC = "P34";  //-- "V29" ; 
+NET  "ddr2_dq[14]"                                    LOC = "E32";  //-- "Y28" ; 
+NET  "ddr2_dq[15]"                                    LOC = "M32";  //-- "Y29" ; 
+NET  "ddr2_dq[16]"                                    LOC = "AD26";  //-- "AC29" ; 
+NET  "ddr2_dq[17]"                                    LOC = "AE27";  //-- "AF31" ; 
+NET  "ddr2_dq[18]"                                    LOC = "AD24";  //-- "AJ31" ; 
+NET  "ddr2_dq[19]"                                    LOC = "AF25";  //-- "AK31" ; 
+NET  "ddr2_dq[20]"                                    LOC = "AF26";  //-- "AF29" ; 
+NET  "ddr2_dq[21]"                                    LOC = "AC24";  //-- "AF30" ; 
+NET  "ddr2_dq[22]"                                    LOC = "AE26";  //-- "AJ30" ; 
+NET  "ddr2_dq[23]"                                    LOC = "AD25";  //-- "AH30" ; 
+NET  "ddr2_dq[24]"                                    LOC = "Y34";  //-- "AA25" ; 
+NET  "ddr2_dq[25]"                                    LOC = "V33";  //-- "AA26" ; 
+NET  "ddr2_dq[26]"                                    LOC = "V32";  //-- "AB27" ; 
+NET  "ddr2_dq[27]"                                    LOC = "AA33";  //-- "AC27" ; 
+NET  "ddr2_dq[28]"                                    LOC = "W34";  //-- "Y24" ; 
+NET  "ddr2_dq[29]"                                    LOC = "AA34";  //-- "AA24" ; 
+NET  "ddr2_dq[30]"                                    LOC = "V34";  //-- "AB25" ; 
+NET  "ddr2_dq[31]"                                    LOC = "Y32";  //-- "AB26" ; 
+NET  "ddr2_dq[32]"                                    LOC = "AB28";  //-- "AB28" ; 
+NET  "ddr2_dq[33]"                                    LOC = "AC28";  //-- "AA28" ; 
+NET  "ddr2_dq[34]"                                    LOC = "AB26";  //-- "AG28" ; 
+NET  "ddr2_dq[35]"                                    LOC = "AF28";  //-- "AH28" ; 
+NET  "ddr2_dq[36]"                                    LOC = "AE28";  //-- "AK26" ; 
+NET  "ddr2_dq[37]"                                    LOC = "AB25";  //-- "AF28" ; 
+NET  "ddr2_dq[38]"                                    LOC = "AH28";  //-- "AE28" ; 
+NET  "ddr2_dq[39]"                                    LOC = "AG28";  //-- "AJ27" ; 
+NET  "ddr2_dq[40]"                                    LOC = "AN33";  //-- "AG25" ; 
+NET  "ddr2_dq[41]"                                    LOC = "AK32";  //-- "AG27" ; 
+NET  "ddr2_dq[42]"                                    LOC = "AN34";  //-- "AE27" ; 
+NET  "ddr2_dq[43]"                                    LOC = "AL33";  //-- "AE26" ; 
+NET  "ddr2_dq[44]"                                    LOC = "AJ32";  //-- "AC25" ; 
+NET  "ddr2_dq[45]"                                    LOC = "AM32";  //-- "AC24" ; 
+NET  "ddr2_dq[46]"                                    LOC = "AL34";  //-- "AD26" ; 
+NET  "ddr2_dq[47]"                                    LOC = "AN32";  //-- "AD25" ; 
+NET  "ddr2_dq[48]"                                    LOC = "G30";  //-- "AN14" ; 
+NET  "ddr2_dq[49]"                                    LOC = "J29";  //-- "AP14" ; 
+NET  "ddr2_dq[50]"                                    LOC = "E31";  //-- "AB10" ; 
+NET  "ddr2_dq[51]"                                    LOC = "E29";  //-- "AA10" ; 
+NET  "ddr2_dq[52]"                                    LOC = "F29";  //-- "AN13" ; 
+NET  "ddr2_dq[53]"                                    LOC = "F31";  //-- "AM13" ; 
+NET  "ddr2_dq[54]"                                    LOC = "F30";  //-- "AA8" ; 
+NET  "ddr2_dq[55]"                                    LOC = "L29";  //-- "AA9" ; 
+NET  "ddr2_dq[56]"                                    LOC = "H30";  //-- "AC8" ; 
+NET  "ddr2_dq[57]"                                    LOC = "T31";  //-- "AB8" ; 
+NET  "ddr2_dq[58]"                                    LOC = "J30";  //-- "AM12" ; 
+NET  "ddr2_dq[59]"                                    LOC = "R31";  //-- "AM11" ; 
+NET  "ddr2_dq[60]"                                    LOC = "J31";  //-- "AC10" ; 
+NET  "ddr2_dq[61]"                                    LOC = "M30";  //-- "AC9" ; 
+NET  "ddr2_dq[62]"                                    LOC = "U30";  //-- "AK9" ; 
+NET  "ddr2_dq[63]"                                    LOC = "G31";  //-- "AF9" ; 
+#NET  "ddr2_a[15]"                                LOC = "AG21" ;
+#NET  "ddr2_a[14]"                                LOC = "AL11" ;
+NET  "ddr2_a[13]"                                LOC = "Y27";  //-- "AL10" ;          
+NET  "ddr2_a[12]"                                LOC = "V27";  //-- "AH19" ;          
+NET  "ddr2_a[11]"                                LOC = "W29";  //-- "AH20" ;          
+NET  "ddr2_a[10]"                                LOC = "AD29";  //-- "AG15" ;          
+NET  "ddr2_a[9]"                                 LOC = "V28";  //-- "AH15" ;          
+NET  "ddr2_a[8]"                                 LOC = "V25";  //-- "AG20" ;         
+NET  "ddr2_a[7]"                                 LOC = "W25";  //-- "AG16" ;          
+NET  "ddr2_a[6]"                                 LOC = "V29";  //-- "AH17" ;         
+NET  "ddr2_a[5]"                                 LOC = "AC29";  //-- "AH22" ;        
+NET  "ddr2_a[4]"                                 LOC = "V30";  //-- "AG22" ;         
+NET  "ddr2_a[3]"                                 LOC = "Y28";  //-- "AG17" ;          
+NET  "ddr2_a[2]"                                 LOC = "AC30";  //-- "AH18" ;          
+NET  "ddr2_a[1]"                                 LOC = "AD30";  //-- "AF18" ;          
+NET  "ddr2_a[0]"                                 LOC = "AE29";  //-- "AE18" ;         
+NET  "ddr2_ba[2]"                                LOC = "AF29";  //-- "AF11" ;        
+NET  "ddr2_ba[1]"                                LOC = "AA29";  //-- "AH13" ;          
+NET  "ddr2_ba[0]"                                LOC = "Y31";  //-- "AH14" ;         
+NET  "ddr2_ras_n"                                LOC = "AH29";  //-- "AG13" ;         
+NET  "ddr2_cas_n"                                LOC = "AF30";  //-- "AH12" ;         
+NET  "ddr2_we_n"                                 LOC = "W31";  //-- "AF19" ;         
+NET  "ddr2_cs_n[0]"                              LOC = "Y29";  //-- "AG18" ;         
+NET  "ddr2_cs_n[1]"                              LOC = "AA31";  //-- "AJ10" ;        
+NET  "ddr2_odt[0]"                               LOC = "AF31";  //-- "AG30" ;         
+NET  "ddr2_odt[1]"                               LOC = "AB31";  //-- "AH8" ;        
+NET  "ddr2_cke[0]"                               LOC = "AB30";  //-- "AG8" ;         
+//NET  "ddr2_cke[1]"                               LOC = "AE24" ;        
+NET  "ddr2_dm[0]"                                LOC = "C32";  //-- "V30" ;         
+NET  "ddr2_dm[1]"                                LOC = "G33";  //-- "AD30" ;          
+NET  "ddr2_dm[2]"                                LOC = "AC25";  //-- "AH29" ;         
+NET  "ddr2_dm[3]"                                LOC = "Y33";  //-- "AC28" ;         
+NET  "ddr2_dm[4]"                                LOC = "AA28";  //-- "AF24" ;         
+NET  "ddr2_dm[5]"                                LOC = "AM33";  //-- "AD24" ;         
+NET  "ddr2_dm[6]"                                LOC = "H29";  //-- "AP12" ;         
+NET  "ddr2_dm[7]"                                LOC = "L30";  //-- "AJ9" ;          
+      
+NET  "ddr2_dqs[0]"                                    LOC = "J32";  //-- "AB31" ; 
+NET  "ddr2_dqs_n[0]"                                  LOC = "H33";  //-- "AA31" ; 
+NET  "ddr2_dqs[1]"                                    LOC = "H34";  //-- "AB30" ; 
+NET  "ddr2_dqs_n[1]"                                  LOC = "J34";  //-- "AC30" ; 
+NET  "ddr2_dqs[2]"                                    LOC = "AH27";  //-- "AA29" ; 
+NET  "ddr2_dqs_n[2]"                                  LOC = "AJ26";  //-- "AA30" ; 
+NET  "ddr2_dqs[3]"                                    LOC = "AF33";  //-- "AK29" ; 
+NET  "ddr2_dqs_n[3]"                                  LOC = "AE33";  //-- "AJ29" ; 
+NET  "ddr2_dqs[4]"                                    LOC = "AK29";  //-- "AK28" ; 
+NET  "ddr2_dqs_n[4]"                                  LOC = "AJ29";  //-- "AK27" ; 
+NET  "ddr2_dqs[5]"                                    LOC = "AH34";  //-- "AH27" ; 
+NET  "ddr2_dqs_n[5]"                                  LOC = "AJ34";  //-- "AJ26" ; 
+NET  "ddr2_dqs[6]"                                    LOC = "N29";  //-- "AD10" ; 
+NET  "ddr2_dqs_n[6]"                                  LOC = "P29";  //-- "AD11" ; 
+NET  "ddr2_dqs[7]"                                    LOC = "K31";  //-- "AK11" ; 
+NET  "ddr2_dqs_n[7]"                                  LOC = "L31";  //-- "AJ11" ; 
+NET  "ddr2_ck[0]"                                LOC = "W24";  //-- "AH9" ;          
+NET  "ddr2_ck_n[0]"                              LOC = "V24";  //-- "AH10" ;          
+NET  "ddr2_ck[1]"                                LOC = "Y26";  //-- "AG10" ;        
+NET  "ddr2_ck_n[1]"                              LOC = "W26";  //-- "AG11" ;         
+
+######################### mgt clock module constraints ########################
+NET GTP_refclk_n  LOC=P3;
+NET GTP_refclk_p  LOC=P4;
+
+
+##---------- Set placement for tile0_rocketio_wrapper_i/GTX_DUAL ------
+INST "flashboard_nand_inst/unchange.rocketio_top_inst/rocketio_i/tile0_rocketio_i/gtp_dual_i" LOC = GTP_DUAL_X0Y4;
+
+##---------- Set placement for tile1_rocketio_wrapper_i/GTX_DUAL ------
+INST "flashboard_nand_inst/unchange.rocketio_top_inst/rocketio_i/tile1_rocketio_i/gtp_dual_i" LOC = GTP_DUAL_X0Y5;
+
+#NET "flashboard_nand_inst/unchange.rocketio_top_inst/clk_gtx" TNM_NET = "flashboard_clk_gtx";
+#TIMESPEC "TS_flashboard_clk_gtx" = PERIOD "flashboard_clk_gtx" 156.25MHz HIGH 50%; 
+
+//-- Avago
+#NET  Fiber_A_TxEn      		LOC = F25;
+#NET  Fiber_A_TxDis     		LOC = F26;
+#NET  Fiber_A_Resetn     	LOC = G27;
+#NET  Fiber_A_SignalDetect  LOC = H27;
+#NET  Fiber_A_Faultn     	LOC = H28;
+#
+#NET  Fiber_B_TxEn				LOC = G28;
+#NET  Fiber_B_TxDis        	LOC = E28;
+#NET  Fiber_B_Resetn       	LOC = F28;
+#NET  Fiber_B_SignalDetect  LOC = E26;
+#NET  Fiber_B_Faultn			LOC = E27;
+
+
+//-- Cetc 44
+#NET  "FIBER_A_TXEN"		LOC = F25;	
+#NET  "FIBER_A_RXEN"		LOC = F26;	
+                           
+#NET  FIBER_A_SDA		LOC = G27;	
+#NET  FIBER_A_SCL		LOC = H27;	
+                           
+#NET  "FIBER_A_SQS"		LOC = H28;	
+#NET  "FIBER_A_SWS"		LOC = G28;	
+                           
+NET  FIBER_A_ALERT	LOC = E28;	
+                           
+NET  FIBER_A_SD1		LOC = F28;	
+NET  FIBER_A_SD2		LOC = E26;	
+NET  FIBER_A_SD3		LOC = E27;	
+NET  FIBER_A_SD4		LOC = N27;	
+
+#NET  FIBER_B_TXEN		LOC = K7;	
+#NET  FIBER_B_RXEN		LOC = K6;	
+#                           
+#NET  FIBER_B_SDA		LOC = R6;	
+#NET  FIBER_B_SCL		LOC = T6;	
+#                           
+#NET  FIBER_B_SQS		LOC = J6;	
+#NET  FIBER_B_SWS		LOC = J5;	
+#                           
+#NET  FIBER_B_ALERT	LOC = R7;	
+#                           
+#NET  FIBER_B_SD1		LOC = R8;	
+#NET  FIBER_B_SD2		LOC = T8;	
+#NET  FIBER_B_SD3		LOC = U7;	
+#NET  FIBER_B_SD4		LOC = H7;	
+
+#Created by Constraints Editor (xc5vlx155t-ff1136-1) - 2012/11/27
+NET "CLK125_N" TNM_NET = CLK125_N;
+TIMESPEC TS_CLK125_N = PERIOD "CLK125_N" 8 ns HIGH 50%;
+NET "CLK125_P" TNM_NET = CLK125_P;
+TIMESPEC TS_CLK125_P = PERIOD "CLK125_P" 8 ns HIGH 50%;
+
+NET "DDR2_CLK125_N" TNM_NET = DDR2_CLK125_N;
+TIMESPEC TS_DDR2_CLK125_N = PERIOD "DDR2_CLK125_N" 8 ns HIGH 50%;
+NET "DDR2_CLK125_P" TNM_NET = DDR2_CLK125_P;
+TIMESPEC TS_DDR2_CLK125_P = PERIOD "DDR2_CLK125_P" 8 ns HIGH 50%;
+
+NET "flashboard_nand_inst/unchange.rocketio_top_inst/clk_gtx" TNM_NET = flashboard_nand_inst/unchange.rocketio_top_inst/clk_gtx;
+TIMESPEC TS_flashboard_nand_inst_unchange_rocketio_top_inst_clk_gtx = PERIOD "flashboard_nand_inst/unchange.rocketio_top_inst/clk_gtx" 4.0 ns HIGH 50%;
+
+NET "GTP_refclk_n" TNM_NET = GTP_refclk_n;
+TIMESPEC TS_GTP_refclk_n = PERIOD "GTP_refclk_n" 8 ns HIGH 50%;
+NET "GTP_refclk_p" TNM_NET = GTP_refclk_p;
+TIMESPEC TS_GTP_refclk_p = PERIOD "GTP_refclk_p" 8 ns HIGH 50%;
+
+NET "sys_clk_n" TNM_NET = sys_clk_n;
+TIMESPEC TS_sys_clk_n = PERIOD "sys_clk_n" 10 ns HIGH 50%;
+NET "sys_clk_p" TNM_NET = sys_clk_p;
+TIMESPEC TS_sys_clk_p = PERIOD "sys_clk_p" 10 ns HIGH 50%;
+
+NET "USER_CLK125_N" TNM_NET = USER_CLK125_N;
+TIMESPEC TS_USER_CLK125_N = PERIOD "USER_CLK125_N" 8 ns HIGH 50%;
+NET "USER_CLK125_P" TNM_NET = USER_CLK125_P;
+TIMESPEC TS_USER_CLK125_P = PERIOD "USER_CLK125_P" 8 ns HIGH 50%;
+
+#Created by Constraints Editor (xc5vlx155t-ff1136-1) - 2012/11/27
+PIN "flashboard_nand_inst/unchange.rocketio_top_inst/txoutclk_dcm0_i/clock_divider_i.CLKDV" TNM = gtp_user_125MHz;
+TIMESPEC TS_gtp_user_125MHz = PERIOD "gtp_user_125MHz" 8.0 ns HIGH 50%;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
