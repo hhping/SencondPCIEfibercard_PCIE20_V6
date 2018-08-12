@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<symbol version="7" name="DDR3_Ctrl_Top">
+    <symboltype>BLOCK</symboltype>
+    <timestamp>2016-8-5T10:57:10</timestamp>
+    <attr value="DDR3_Ctrl_Top" name="VeriModel" />
+    <graph>
+        <rect width="256" x="64" y="0" height="0" />
+        <attrtext style="alignment:BCENTER;fontsize:56;fontname:Arial" attrname="SymbolName" x="192" y="-8" type="symbol" />
+    </graph>
+</symbol>

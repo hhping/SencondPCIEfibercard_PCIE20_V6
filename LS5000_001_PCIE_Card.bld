@@ -1,0 +1,417 @@
+Release 14.7 ngdbuild P.20131013 (nt64)
+Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+
+Command Line: C:\Xilinx\14.7\ISE_DS\ISE\bin\nt64\unwrapped\ngdbuild.exe -filter
+iseconfig/filter.filter -intstyle ise -dd _ngo -sd
+DDR3_files/user_ddr_data_interface/CORES -sd debugCore -sd
+GTX_files/CmdAddrData_FIFO -sd ipcore_dir -sd PCIE20_prj/ipcore_dir -sd
+rtl/ipcore -nt timestamp -uc PCIE_files/xilinx_pcie_constrains.ucf -uc
+DDR3_380T.ucf -uc Constraint_Files/CommonConstraint.ucf -uc
+GTX_files/GTX_Constraint.ucf -p xc6vlx240t-ff1156-2 LS5000_001_PCIE_Card.ngc
+LS5000_001_PCIE_Card.ngd
+
+Reading NGO file
+"D:/work_content/second_fiber_card/SencondPCIEfibercard_PCIE20_V5_oldclk/LS5000_
+001_PCIE_Card.ngc" ...
+Loading design module "ipcore_dir/DMA_Buffer_FWFT.ngc"...
+Loading design module "PCIE20_prj/ipcore_dir/Rev_RAM.ngc"...
+Loading design module "PCIE20_prj/ipcore_dir/DMA_128_Buffer.ngc"...
+Loading design module "PCIE20_prj/ipcore_dir/multiplier_size.ngc"...
+Loading design module
+"DDR3_files/user_ddr_data_interface/CORES/ddr2_fifo_64to128_16KB_TH.ngc"...
+Loading design module
+"DDR3_files/user_ddr_data_interface/CORES/ddr2_fifo_128to64_16KB.ngc"...
+Loading design module "debugCore/myila.ngc"...
+Loading design module "debugCore/ila512.ngc"...
+Loading design module "debugCore/myicon.ngc"...
+Loading design module "debugCore/myvio.ngc"...
+Loading design module
+"GTX_files/CmdAddrData_FIFO/flashboard_ctrl_fifo_32x16.ngc"...
+Loading design module
+"GTX_files/CmdAddrData_FIFO/flashboard_data_fifo_32x16.ngc"...
+Loading design module
+"GTX_files/CmdAddrData_FIFO/flashboard_feedback_ctrl_fifo_16x32.ngc"...
+Loading design module
+"GTX_files/CmdAddrData_FIFO/flashboard_data_fifo_16x32.ngc"...
+Loading design module "rtl/ipcore/FIFO_32to64.ngc"...
+Loading design module "rtl/ipcore/FIFO_64to32.ngc"...
+Loading design module "rtl/ipcore/FIFO_64t128.ngc"...
+Loading design module "rtl/ipcore/FIFO_128to64.ngc"...
+Loading design module "ipcore_dir/FIFO_128to64_T.ngc"...
+Gathering constraint information from source properties...
+Done.
+
+Annotating constraints to design from ucf file
+"PCIE_files/xilinx_pcie_constrains.ucf" ...
+Annotating constraints to design from ucf file "DDR3_380T.ucf" ...
+Annotating constraints to design from ucf file
+"Constraint_Files/CommonConstraint.ucf" ...
+Annotating constraints to design from ucf file "GTX_files/GTX_Constraint.ucf"
+...
+Resolving constraint associations...
+Checking Constraint Associations...
+WARNING:ConstraintSystem - Constraint <NET
+   "pcie_2_0_inst/core*/pcie_clocking_i/clk_125" TNM_NET = "CLK_125" ;>
+   [PCIE_files/xilinx_pcie_constrains.ucf(143)] was not distributed to the
+   output pin TXOUTCLK of block
+   pcie_2_0_inst/core/pcie_2_0_i/pcie_gt_i/gtx_v6_i/GTXD[0].GTX because the
+   signal path to this output pin depends upon block attribute settings.
+   Constraint distribution does not support attribute dependent distribution.
+
+WARNING:ConstraintSystem:137 - Constraint <NET "ddr3clk_sys_p" TNM_NET =
+   "TNM_clk_sys";> [DDR3_380T.ucf(12)]: No appropriate instances for the TNM
+   constraint are driven by "ddr3clk_sys_p".
+
+WARNING:ConstraintSystem:56 - Constraint <TIMESPEC TS_clk_sys = PERIOD
+   "TNM_clk_sys" 5 ns;> [DDR3_380T.ucf(13)]: Unable to find an active 'TNM' or
+   'TimeGrp' constraint named 'TNM_clk_sys'.
+
+WARNING:ConstraintSystem:137 - Constraint <NET "ddr3clk_sys_n" TNM_NET =
+   "TNM_clk_sys_n";> [DDR3_380T.ucf(14)]: No appropriate instances for the TNM
+   constraint are driven by "ddr3clk_sys_n".
+
+WARNING:ConstraintSystem:56 - Constraint <TIMESPEC TS_clk_sys_n = PERIOD
+   "TNM_clk_sys_n" 5 ns;> [DDR3_380T.ucf(15)]: Unable to find an active 'TNM' or
+   'TimeGrp' constraint named 'TNM_clk_sys_n'.
+
+WARNING:ConstraintSystem:3 - Constraint <TIMESPEC "TS_clk_rsync_rise_to_fall" = 
+    FROM "TG_clk_rsync_rise" TO "TG_clk_rsync_fall" "TS_sys_clk" * 2;>
+   [DDR3_380T.ucf(40)]: This constraint will be ignored because the relative
+   clock constraint named 'TS_sys_clk' was not found.
+
+WARNING:ConstraintSystem:3 - Constraint <TIMESPEC "TS_MC_PHY_INIT_SEL" = FROM
+   "TNM_PHY_INIT_SEL" TO FFS = "TS_sys_clk"*4;> [DDR3_380T.ucf(47)]: This
+   constraint will be ignored because the relative clock constraint named
+   'TS_sys_clk' was not found.
+
+INFO:ConstraintSystem:178 - TNM 'TNM_clk_ref', used in period specification
+   'TS_clk_ref', was traced into MMCM_ADV instance
+   ddr3_case_inst/u_iodelay_ctrl/MMCM_BASE_inst. The following new TNM groups
+   and period specifications were generated at the MMCM_ADV output(s): 
+   CLKOUT1: <TIMESPEC
+   TS_DDR3_Ctrl_Top_inst_ddr3_case_inst_u_iodelay_ctrl_clk_ref_bufg = PERIOD
+   "DDR3_Ctrl_Top_inst_ddr3_case_inst_u_iodelay_ctrl_clk_ref_bufg" TS_clk_ref
+   HIGH 50%>
+
+INFO:ConstraintSystem:178 - TNM 'TNM_clk_ref', used in period specification
+   'TS_clk_ref', was traced into MMCM_ADV instance
+   ddr3_case_inst/u_iodelay_ctrl/MMCM_BASE_inst. The following new TNM groups
+   and period specifications were generated at the MMCM_ADV output(s): 
+   CLKOUT0: <TIMESPEC
+   TS_DDR3_Ctrl_Top_inst_ddr3_case_inst_u_iodelay_ctrl_clk400_ref_bufg = PERIOD
+   "DDR3_Ctrl_Top_inst_ddr3_case_inst_u_iodelay_ctrl_clk400_ref_bufg" TS_clk_ref
+   / 2 HIGH 50%>
+
+INFO:ConstraintSystem:178 - TNM 'TNM_clk_ref_n', used in period specification
+   'TS_clk_ref_n', was traced into MMCM_ADV instance
+   ddr3_case_inst/u_iodelay_ctrl/MMCM_BASE_inst. The following new TNM groups
+   and period specifications were generated at the MMCM_ADV output(s): 
+   CLKOUT1: <TIMESPEC
+   TS_DDR3_Ctrl_Top_inst_ddr3_case_inst_u_iodelay_ctrl_clk_ref_bufg_0 = PERIOD
+   "DDR3_Ctrl_Top_inst_ddr3_case_inst_u_iodelay_ctrl_clk_ref_bufg_0"
+   TS_clk_ref_n HIGH 50%>
+
+INFO:ConstraintSystem:178 - TNM 'TNM_clk_ref_n', used in period specification
+   'TS_clk_ref_n', was traced into MMCM_ADV instance
+   ddr3_case_inst/u_iodelay_ctrl/MMCM_BASE_inst. The following new TNM groups
+   and period specifications were generated at the MMCM_ADV output(s): 
+   CLKOUT0: <TIMESPEC
+   TS_DDR3_Ctrl_Top_inst_ddr3_case_inst_u_iodelay_ctrl_clk400_ref_bufg_0 =
+   PERIOD "DDR3_Ctrl_Top_inst_ddr3_case_inst_u_iodelay_ctrl_clk400_ref_bufg_0"
+   TS_clk_ref_n / 2 HIGH 50%>
+
+WARNING:ConstraintSystem:191 - The TNM 'TNM_clk_sys', does not directly or
+   indirectly drive any flip-flops, latches and/or RAMS and cannot be actively
+   used by the referencing Period constraint 'TS_clk_sys'. If clock manager
+   blocks are directly or indirectly driven, a new TNM constraint will not be
+   derived even though the referencing constraint is a PERIOD constraint unless
+   an output of the clock manager drives flip-flops, latches or RAMs. This TNM
+   is used in the following user PERIOD specification:
+   <TIMESPEC TS_clk_sys = PERIOD "TNM_clk_sys" 5 ns;> [DDR3_380T.ucf(13)]
+
+WARNING:ConstraintSystem:197 - The following specification is invalid because
+   the referenced TNM constraint was removed:
+   <TIMESPEC TS_clk_sys = PERIOD "TNM_clk_sys" 5 ns;> [DDR3_380T.ucf(13)]
+
+WARNING:ConstraintSystem:191 - The TNM 'TNM_clk_sys_n', does not directly or
+   indirectly drive any flip-flops, latches and/or RAMS and cannot be actively
+   used by the referencing Period constraint 'TS_clk_sys_n'. If clock manager
+   blocks are directly or indirectly driven, a new TNM constraint will not be
+   derived even though the referencing constraint is a PERIOD constraint unless
+   an output of the clock manager drives flip-flops, latches or RAMs. This TNM
+   is used in the following user PERIOD specification:
+   <TIMESPEC TS_clk_sys_n = PERIOD "TNM_clk_sys_n" 5 ns;> [DDR3_380T.ucf(15)]
+
+WARNING:ConstraintSystem:197 - The following specification is invalid because
+   the referenced TNM constraint was removed:
+   <TIMESPEC TS_clk_sys_n = PERIOD "TNM_clk_sys_n" 5 ns;> [DDR3_380T.ucf(15)]
+
+INFO:ConstraintSystem:178 - TNM 'TNM_sys_clk125m', used in period specification
+   'TS_sys_clk125m', was traced into MMCM_ADV instance
+   DMA_USER_CLK/mmcm_adv_inst. The following new TNM groups and period
+   specifications were generated at the MMCM_ADV output(s): 
+   CLKOUT0: <TIMESPEC TS_DMA_USER_CLK_clkout0 = PERIOD "DMA_USER_CLK_clkout0"
+   TS_sys_clk125m / 0.8 HIGH 50%>
+
+INFO:ConstraintSystem:178 - TNM 'TNM_sys_clk125m', used in period specification
+   'TS_sys_clk125m', was traced into MMCM_ADV instance
+   DMA_USER_CLK/mmcm_adv_inst. The following new TNM groups and period
+   specifications were generated at the MMCM_ADV output(s): 
+   CLKOUT2: <TIMESPEC TS_DMA_USER_CLK_clkout2 = PERIOD "DMA_USER_CLK_clkout2"
+   TS_sys_clk125m / 1.28 HIGH 50%>
+
+INFO:ConstraintSystem:178 - TNM 'sys_clk125m_n', used in period specification
+   'TS_sys_clk125m_n', was traced into MMCM_ADV instance
+   DMA_USER_CLK/mmcm_adv_inst. The following new TNM groups and period
+   specifications were generated at the MMCM_ADV output(s): 
+   CLKOUT0: <TIMESPEC TS_DMA_USER_CLK_clkout0_0 = PERIOD
+   "DMA_USER_CLK_clkout0_0" TS_sys_clk125m_n / 0.8 HIGH 50%>
+
+INFO:ConstraintSystem:178 - TNM 'sys_clk125m_n', used in period specification
+   'TS_sys_clk125m_n', was traced into MMCM_ADV instance
+   DMA_USER_CLK/mmcm_adv_inst. The following new TNM groups and period
+   specifications were generated at the MMCM_ADV output(s): 
+   CLKOUT2: <TIMESPEC TS_DMA_USER_CLK_clkout2_0 = PERIOD
+   "DMA_USER_CLK_clkout2_0" TS_sys_clk125m_n / 1.28 HIGH 50%>
+
+INFO:ConstraintSystem:178 - TNM 'ddr3clk_ref_n', used in period specification
+   'TS_ddr3clk_ref_n', was traced into MMCM_ADV instance
+   ddr3_case_inst/u_iodelay_ctrl/MMCM_BASE_inst. The following new TNM groups
+   and period specifications were generated at the MMCM_ADV output(s): 
+   CLKOUT1: <TIMESPEC
+   TS_DDR3_Ctrl_Top_inst_ddr3_case_inst_u_iodelay_ctrl_clk_ref_bufg_1 = PERIOD
+   "DDR3_Ctrl_Top_inst_ddr3_case_inst_u_iodelay_ctrl_clk_ref_bufg_1"
+   TS_ddr3clk_ref_n HIGH 50%>
+
+INFO:ConstraintSystem:178 - TNM 'ddr3clk_ref_n', used in period specification
+   'TS_ddr3clk_ref_n', was traced into MMCM_ADV instance
+   ddr3_case_inst/u_iodelay_ctrl/MMCM_BASE_inst. The following new TNM groups
+   and period specifications were generated at the MMCM_ADV output(s): 
+   CLKOUT0: <TIMESPEC
+   TS_DDR3_Ctrl_Top_inst_ddr3_case_inst_u_iodelay_ctrl_clk400_ref_bufg_1 =
+   PERIOD "DDR3_Ctrl_Top_inst_ddr3_case_inst_u_iodelay_ctrl_clk400_ref_bufg_1"
+   TS_ddr3clk_ref_n / 2 HIGH 50%>
+
+INFO:ConstraintSystem:178 - TNM
+   'DDR3_Ctrl_Top_inst_ddr3_case_inst_u_iodelay_ctrl_clk400_ref_bufg', used in
+   period specification
+   'TS_DDR3_Ctrl_Top_inst_ddr3_case_inst_u_iodelay_ctrl_clk400_ref_bufg', was
+   traced into MMCM_ADV instance ddr3_case_inst/u_infrastructure/u_mmcm_adv. The
+   following new TNM groups and period specifications were generated at the
+   MMCM_ADV output(s): 
+   CLKOUT1: <TIMESPEC
+   TS_DDR3_Ctrl_Top_inst_ddr3_case_inst_u_infrastructure_clk_pll = PERIOD
+   "DDR3_Ctrl_Top_inst_ddr3_case_inst_u_infrastructure_clk_pll"
+   TS_DDR3_Ctrl_Top_inst_ddr3_case_inst_u_iodelay_ctrl_clk4...>
+
+INFO:ConstraintSystem:178 - TNM
+   'DDR3_Ctrl_Top_inst_ddr3_case_inst_u_iodelay_ctrl_clk400_ref_bufg', used in
+   period specification
+   'TS_DDR3_Ctrl_Top_inst_ddr3_case_inst_u_iodelay_ctrl_clk400_ref_bufg', was
+   traced into MMCM_ADV instance ddr3_case_inst/u_infrastructure/u_mmcm_adv. The
+   following new TNM groups and period specifications were generated at the
+   MMCM_ADV output(s): 
+   CLKOUT0: <TIMESPEC
+   TS_DDR3_Ctrl_Top_inst_ddr3_case_inst_u_infrastructure_clk_mem_pll = PERIOD
+   "DDR3_Ctrl_Top_inst_ddr3_case_inst_u_infrastructure_clk_mem_pll"
+   TS_DDR3_Ctrl_Top_inst_ddr3_case_inst_u_iodelay_c...>
+
+INFO:ConstraintSystem:178 - TNM
+   'DDR3_Ctrl_Top_inst_ddr3_case_inst_u_iodelay_ctrl_clk400_ref_bufg', used in
+   period specification
+   'TS_DDR3_Ctrl_Top_inst_ddr3_case_inst_u_iodelay_ctrl_clk400_ref_bufg', was
+   traced into MMCM_ADV instance ddr3_case_inst/u_infrastructure/u_mmcm_adv. The
+   following new TNM groups and period specifications were generated at the
+   MMCM_ADV output(s): 
+   CLKOUT2: <TIMESPEC TS_DDR3_Ctrl_Top_inst_ddr3_case_inst_clk_rd_base = PERIOD
+   "DDR3_Ctrl_Top_inst_ddr3_case_inst_clk_rd_base"
+   TS_DDR3_Ctrl_Top_inst_ddr3_case_inst_u_iodelay_ctrl_clk400_ref_bufg HIGH 50%>
+
+INFO:ConstraintSystem:178 - TNM
+   'DDR3_Ctrl_Top_inst_ddr3_case_inst_u_iodelay_ctrl_clk400_ref_bufg_0', used in
+   period specification
+   'TS_DDR3_Ctrl_Top_inst_ddr3_case_inst_u_iodelay_ctrl_clk400_ref_bufg_0', was
+   traced into MMCM_ADV instance ddr3_case_inst/u_infrastructure/u_mmcm_adv. The
+   following new TNM groups and period specifications were generated at the
+   MMCM_ADV output(s): 
+   CLKOUT1: <TIMESPEC
+   TS_DDR3_Ctrl_Top_inst_ddr3_case_inst_u_infrastructure_clk_pll_0 = PERIOD
+   "DDR3_Ctrl_Top_inst_ddr3_case_inst_u_infrastructure_clk_pll_0"
+   TS_DDR3_Ctrl_Top_inst_ddr3_case_inst_u_iodelay_ctrl_...>
+
+INFO:ConstraintSystem:178 - TNM
+   'DDR3_Ctrl_Top_inst_ddr3_case_inst_u_iodelay_ctrl_clk400_ref_bufg_0', used in
+   period specification
+   'TS_DDR3_Ctrl_Top_inst_ddr3_case_inst_u_iodelay_ctrl_clk400_ref_bufg_0', was
+   traced into MMCM_ADV instance ddr3_case_inst/u_infrastructure/u_mmcm_adv. The
+   following new TNM groups and period specifications were generated at the
+   MMCM_ADV output(s): 
+   CLKOUT0: <TIMESPEC
+   TS_DDR3_Ctrl_Top_inst_ddr3_case_inst_u_infrastructure_clk_mem_pll_0 = PERIOD
+   "DDR3_Ctrl_Top_inst_ddr3_case_inst_u_infrastructure_clk_mem_pll_0"
+   TS_DDR3_Ctrl_Top_inst_ddr3_case_inst_u_iodel...>
+
+INFO:ConstraintSystem:178 - TNM
+   'DDR3_Ctrl_Top_inst_ddr3_case_inst_u_iodelay_ctrl_clk400_ref_bufg_0', used in
+   period specification
+   'TS_DDR3_Ctrl_Top_inst_ddr3_case_inst_u_iodelay_ctrl_clk400_ref_bufg_0', was
+   traced into MMCM_ADV instance ddr3_case_inst/u_infrastructure/u_mmcm_adv. The
+   following new TNM groups and period specifications were generated at the
+   MMCM_ADV output(s): 
+   CLKOUT2: <TIMESPEC TS_DDR3_Ctrl_Top_inst_ddr3_case_inst_clk_rd_base_0 =
+   PERIOD "DDR3_Ctrl_Top_inst_ddr3_case_inst_clk_rd_base_0"
+   TS_DDR3_Ctrl_Top_inst_ddr3_case_inst_u_iodelay_ctrl_clk400_ref_bufg_0 HIGH
+   50%>
+
+INFO:ConstraintSystem:178 - TNM
+   'DDR3_Ctrl_Top_inst_ddr3_case_inst_u_iodelay_ctrl_clk400_ref_bufg_1', used in
+   period specification
+   'TS_DDR3_Ctrl_Top_inst_ddr3_case_inst_u_iodelay_ctrl_clk400_ref_bufg_1', was
+   traced into MMCM_ADV instance ddr3_case_inst/u_infrastructure/u_mmcm_adv. The
+   following new TNM groups and period specifications were generated at the
+   MMCM_ADV output(s): 
+   CLKOUT1: <TIMESPEC
+   TS_DDR3_Ctrl_Top_inst_ddr3_case_inst_u_infrastructure_clk_pll_1 = PERIOD
+   "DDR3_Ctrl_Top_inst_ddr3_case_inst_u_infrastructure_clk_pll_1"
+   TS_DDR3_Ctrl_Top_inst_ddr3_case_inst_u_iodelay_ctrl_...>
+
+INFO:ConstraintSystem:178 - TNM
+   'DDR3_Ctrl_Top_inst_ddr3_case_inst_u_iodelay_ctrl_clk400_ref_bufg_1', used in
+   period specification
+   'TS_DDR3_Ctrl_Top_inst_ddr3_case_inst_u_iodelay_ctrl_clk400_ref_bufg_1', was
+   traced into MMCM_ADV instance ddr3_case_inst/u_infrastructure/u_mmcm_adv. The
+   following new TNM groups and period specifications were generated at the
+   MMCM_ADV output(s): 
+   CLKOUT0: <TIMESPEC
+   TS_DDR3_Ctrl_Top_inst_ddr3_case_inst_u_infrastructure_clk_mem_pll_1 = PERIOD
+   "DDR3_Ctrl_Top_inst_ddr3_case_inst_u_infrastructure_clk_mem_pll_1"
+   TS_DDR3_Ctrl_Top_inst_ddr3_case_inst_u_iodel...>
+
+INFO:ConstraintSystem:178 - TNM
+   'DDR3_Ctrl_Top_inst_ddr3_case_inst_u_iodelay_ctrl_clk400_ref_bufg_1', used in
+   period specification
+   'TS_DDR3_Ctrl_Top_inst_ddr3_case_inst_u_iodelay_ctrl_clk400_ref_bufg_1', was
+   traced into MMCM_ADV instance ddr3_case_inst/u_infrastructure/u_mmcm_adv. The
+   following new TNM groups and period specifications were generated at the
+   MMCM_ADV output(s): 
+   CLKOUT2: <TIMESPEC TS_DDR3_Ctrl_Top_inst_ddr3_case_inst_clk_rd_base_1 =
+   PERIOD "DDR3_Ctrl_Top_inst_ddr3_case_inst_clk_rd_base_1"
+   TS_DDR3_Ctrl_Top_inst_ddr3_case_inst_u_iodelay_ctrl_clk400_ref_bufg_1 HIGH
+   50%>
+
+Done...
+
+WARNING:NgdBuild:1440 - User specified non-default attribute value (5) was
+   detected for the CLKIN1_PERIOD attribute on MMCM
+   "ddr3_case_inst/u_iodelay_ctrl/MMCM_BASE_inst".  This does not match the
+   PERIOD constraint value (8 ns.).  The uncertainty calculation will use the
+   PERIOD constraint value.  This could result in incorrect uncertainty
+   calculated for MMCM output clocks.
+WARNING:NgdBuild:1440 - User specified non-default attribute value (2.5) was
+   detected for the CLKIN1_PERIOD attribute on MMCM
+   "ddr3_case_inst/u_infrastructure/u_mmcm_adv".  This does not match the PERIOD
+   constraint value (4 ns.).  The uncertainty calculation will use the PERIOD
+   constraint value.  This could result in incorrect uncertainty calculated for
+   MMCM output clocks.
+Checking expanded design ...
+WARNING:NgdBuild:443 - SFF primitive
+   'vio_inst/U0/I_VIO/reset_f_edge/I_H2L.U_DOUT' has unconnected output pin
+WARNING:NgdBuild:452 - logical net 'N1263' has no driver
+WARNING:NgdBuild:452 - logical net 'N1264' has no driver
+WARNING:NgdBuild:452 - logical net 'N1265' has no driver
+WARNING:NgdBuild:452 - logical net 'N1266' has no driver
+WARNING:NgdBuild:452 - logical net 'N1267' has no driver
+WARNING:NgdBuild:452 - logical net 'N1268' has no driver
+WARNING:NgdBuild:452 - logical net 'N1269' has no driver
+WARNING:NgdBuild:452 - logical net 'N1270' has no driver
+WARNING:NgdBuild:452 - logical net 'N1271' has no driver
+WARNING:NgdBuild:452 - logical net 'N1272' has no driver
+WARNING:NgdBuild:452 - logical net 'N1273' has no driver
+WARNING:NgdBuild:452 - logical net 'N1274' has no driver
+WARNING:NgdBuild:452 - logical net 'N1275' has no driver
+WARNING:NgdBuild:452 - logical net 'N1276' has no driver
+WARNING:NgdBuild:452 - logical net 'N1277' has no driver
+WARNING:NgdBuild:452 - logical net 'N1278' has no driver
+WARNING:NgdBuild:452 - logical net 'N1279' has no driver
+WARNING:NgdBuild:452 - logical net 'N1280' has no driver
+WARNING:NgdBuild:452 - logical net 'N1281' has no driver
+WARNING:NgdBuild:452 - logical net 'N1282' has no driver
+WARNING:NgdBuild:452 - logical net 'N1283' has no driver
+WARNING:NgdBuild:452 - logical net 'N1284' has no driver
+WARNING:NgdBuild:452 - logical net 'N1285' has no driver
+WARNING:NgdBuild:452 - logical net 'N1286' has no driver
+WARNING:NgdBuild:452 - logical net 'N1287' has no driver
+WARNING:NgdBuild:452 - logical net 'N1288' has no driver
+WARNING:NgdBuild:452 - logical net 'N1289' has no driver
+WARNING:NgdBuild:452 - logical net 'N1290' has no driver
+WARNING:NgdBuild:452 - logical net 'N1291' has no driver
+WARNING:NgdBuild:452 - logical net 'N1292' has no driver
+WARNING:NgdBuild:452 - logical net 'N1293' has no driver
+WARNING:NgdBuild:452 - logical net 'N1294' has no driver
+WARNING:NgdBuild:452 - logical net 'N1295' has no driver
+WARNING:NgdBuild:452 - logical net 'N1296' has no driver
+WARNING:NgdBuild:452 - logical net 'N1297' has no driver
+WARNING:NgdBuild:452 - logical net 'N1298' has no driver
+WARNING:NgdBuild:452 - logical net 'N1299' has no driver
+WARNING:NgdBuild:452 - logical net 'N1300' has no driver
+WARNING:NgdBuild:452 - logical net 'N1301' has no driver
+WARNING:NgdBuild:452 - logical net 'N1302' has no driver
+WARNING:NgdBuild:452 - logical net 'N1303' has no driver
+WARNING:NgdBuild:452 - logical net 'N1304' has no driver
+WARNING:NgdBuild:452 - logical net 'N1305' has no driver
+WARNING:NgdBuild:452 - logical net 'N1306' has no driver
+WARNING:NgdBuild:452 - logical net 'N1307' has no driver
+WARNING:NgdBuild:452 - logical net 'N1308' has no driver
+WARNING:NgdBuild:452 - logical net 'N1309' has no driver
+WARNING:NgdBuild:452 - logical net 'N1310' has no driver
+WARNING:NgdBuild:452 - logical net 'N1311' has no driver
+WARNING:NgdBuild:452 - logical net 'N1312' has no driver
+WARNING:NgdBuild:452 - logical net 'N1313' has no driver
+WARNING:NgdBuild:452 - logical net 'N1314' has no driver
+WARNING:NgdBuild:452 - logical net 'N1315' has no driver
+WARNING:NgdBuild:452 - logical net 'N1316' has no driver
+WARNING:NgdBuild:452 - logical net 'N1317' has no driver
+WARNING:NgdBuild:452 - logical net 'N1318' has no driver
+WARNING:NgdBuild:452 - logical net 'N1319' has no driver
+WARNING:NgdBuild:452 - logical net 'N1320' has no driver
+WARNING:NgdBuild:452 - logical net 'N1321' has no driver
+WARNING:NgdBuild:452 - logical net 'N1322' has no driver
+WARNING:NgdBuild:452 - logical net 'N1323' has no driver
+WARNING:NgdBuild:452 - logical net 'N1324' has no driver
+WARNING:NgdBuild:452 - logical net 'N1325' has no driver
+WARNING:NgdBuild:452 - logical net 'N1326' has no driver
+WARNING:NgdBuild:452 - logical net 'N1327' has no driver
+WARNING:NgdBuild:452 - logical net 'N1328' has no driver
+WARNING:NgdBuild:452 - logical net 'N1329' has no driver
+WARNING:NgdBuild:452 - logical net 'N1330' has no driver
+WARNING:NgdBuild:452 - logical net 'N1331' has no driver
+WARNING:NgdBuild:452 - logical net 'N1332' has no driver
+WARNING:NgdBuild:452 - logical net 'N1333' has no driver
+WARNING:NgdBuild:452 - logical net 'N1334' has no driver
+WARNING:NgdBuild:452 - logical net 'N1335' has no driver
+WARNING:NgdBuild:452 - logical net 'N1336' has no driver
+WARNING:NgdBuild:452 - logical net 'N1337' has no driver
+WARNING:NgdBuild:452 - logical net 'N1338' has no driver
+WARNING:NgdBuild:452 - logical net 'N1339' has no driver
+WARNING:NgdBuild:452 - logical net 'N1340' has no driver
+WARNING:NgdBuild:452 - logical net 'N1341' has no driver
+WARNING:NgdBuild:452 - logical net 'N1342' has no driver
+
+Partition Implementation Status
+-------------------------------
+
+  No Partitions were found in this design.
+
+-------------------------------
+
+NGDBUILD Design Results Summary:
+  Number of errors:     0
+  Number of warnings:  94
+
+Total memory usage is 584884 kilobytes
+
+Writing NGD file "LS5000_001_PCIE_Card.ngd" ...
+Total REAL time to NGDBUILD completion:  52 sec
+Total CPU time to NGDBUILD completion:   52 sec
+
+Writing NGDBUILD log file "LS5000_001_PCIE_Card.bld"...

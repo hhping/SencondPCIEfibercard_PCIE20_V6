@@ -1,0 +1,7 @@
+verilog work "rtl/ipcore/FIFO_64to32.v"
+verilog work "rtl/ipcore/FIFO_64t128.v"
+verilog work "rtl/ipcore/FIFO_32to64.v"
+verilog work "rtl/ipcore/FIFO_128to64.v"
+verilog work "ipcore_dir/FIFO_128to64_T.v"
+verilog work "ipcore_dir/FIFO_128t128.v"
+verilog work "rtl/PCIE_GTP_Inteface.v"

@@ -1,0 +1,2 @@
+vhdtdtfi -lib work D:/work_content/second_fiber_card/SencondPCIEfibercard7/DDR3_files/DDR3_Ctrl_top.v -lang verilog -prj pcie_bmd -o DDR3_Ctrl_Top.spl -module DDR3_Ctrl_Top -template D:/soft_install/ISE14.7/14.7/ISE_DS/ISE//data/splveri.tft -deleteonerror 
+spl2sym -intstyle ise -family virtex6 DDR3_Ctrl_Top.spl D:/work_content/second_fiber_card/SencondPCIEfibercard7/DDR3_Ctrl_Top.sym 
